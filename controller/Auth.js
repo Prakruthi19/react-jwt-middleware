@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt");
 require('dotenv').config();
 exports.signup = async(req, res) =>{
     try{
-        const {name, email, password} = req.body;
+        const {name, email, password, role} = req.body;
 
         const existinguser = await User.findOne({email});
         if (existinguser){
@@ -25,7 +25,7 @@ exports.signup = async(req, res) =>{
             })
         }
         const user = await User.create({
-            name, email, password: hashpass
+            name, email, password: hashpass, role
         })
 
         return res.status(200).json({
@@ -57,10 +57,18 @@ exports.login = async(req, res) =>{
                 messaage:"USER NOT FOUND"
             })
         }
-
+        const isMatch = await bcrypt.compare(password, user.password)
+        if (!isMatch)
+        {
+            return res.status(400).json({
+                success: false,
+                message: "INVALID PASSWORD"
+            })
+        }
         let payload = {
             email: user.email,
-            id: user._id
+            id: user._id,
+            role: user.role,
         }
         if (await bcrypt.compare(password, user.password)){
             let token = jwt.sign(payload, process.env.secret);
