@@ -17,29 +17,27 @@ npm i express
 ```
 ```sh
 npm i mongoose
+```
 ```sh
-
 npm i jsonwebtoken
+```
+```sh
 npm i bcryptjs
-
+```
+```sh
 npm i dotenv
-
+```
+```sh
 npm i nodemon
 ```
 
 If using nodemon, add the following script in package.json
+<br>
 "scripts": {
   "start": "node server.js",
   "dev": "nodemon server.js"
 }
+<br>
+
 Run the server using:
 node index
-
-/project-root
-│── server.js          # Main server file
-│── .env               # Environment variables
-│── package.json       # Project dependencies & scripts
-│── node_modules/      # Installed dependencies
-│── models/            # Mongoose models
-│── routes/            # Express routes
-│── middleware/        # Authentication middleware
